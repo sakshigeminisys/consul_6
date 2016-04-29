@@ -2,7 +2,6 @@
 	"data_dir": "/data",
 	"ui_dir": "/ui",
 	"client_addr": "0.0.0.0",
-	"domain": "sakshi-host.gsintlab.com",
 	"ports": {
 		"dns": 53
 	},
