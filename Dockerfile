@@ -21,6 +21,9 @@ RUN echo "${CONSUL_SHA256}  /tmp/consul.zip" > /tmp/consul.sha256 \
   && chmod +x /bin/consul \
   && rm /tmp/consul.zip
 
+ADD  https://releases.hashicorp.com/consul/0.6.4/consul_0.6.4_web_ui.zip /tmp/webui.zip
+RUN cd /tmp && unzip /tmp/webui.zip -d /ui && rm /tmp/webui.zip
+
 ADD https://get.docker.io/builds/Linux/x86_64/docker-1.2.0 /bin/docker
 RUN chmod +x /bin/docker
 
