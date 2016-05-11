@@ -1,0 +1,70 @@
+version: "1.1"
+schemaVersion: v1
+app_id: consul_two_nodes_ui
+tiers:
+  - name: node1
+    type: db
+    replicas: 1
+    containers:
+    - name: node1
+      image: sakshisharma84/consul_ui
+      command: [ "/bin/start", "-server", "-bootstrap-expect", "2", "-ui-dir", "/ui"]
+      ports:
+      - containerPort: 8300
+        hostPort: 8300
+      - containerPort: 8301
+        hostPort: 8301
+      - containerPort: 8301
+        hostPort: 8301
+        protocol: UDP
+      - containerPort: 8302
+        hostPort: 8302
+      - containerPort: 8302
+        hostPort: 8302
+        protocol: UDP
+      - containerPort: 8400
+        hostPort: 8400
+      - containerPort: 53
+        hostPort: 8600
+      - containerPort: 53
+        hostPort: 8600
+        protocol: UDP
+      - containerPort: 8500
+        hostPort: 8500
+        service: external
+        url:
+        - http://APPORBIT_SVC:APPORBIT_PORT/ui
+      volumes:
+      - containerVolume: "/data"
+        min-size: 1G
+  - name: node2
+    type: db
+    replicas: 1
+    containers:
+    - name: node2
+      image: sakshisharma84/consul_ui
+      command: [ "/bin/start", "-server", "-join", "node1"]
+      ports:
+      - containerPort: 8300
+        hostPort: 8300
+      - containerPort: 8301
+        hostPort: 8301
+      - containerPort: 8301
+        hostPort: 8301
+        protocol: UDP
+      - containerPort: 8302
+        hostPort: 8302
+        protocol: TCP
+      - containerPort: 8302
+        hostPort: 8302
+        protocol: UDP
+      - containerPort: 8400
+        hostPort: 8400
+      - containerPort: 8500
+        hostPort: 8500 
+      - containerPort: 53
+        hostPort: 8600 
+      - containerPort: 53
+        hostPort: 8600
+        protocol: UDP
+  
